@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://880biyv5t7e7"]
+
+[ext_resource type="Script" path="res://ThinIce/scripts/HexTile.gd" id="1_oof16"]
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_6nobc"]
+radius = 1.0
+radial_steps = 6
+
+[node name="HexTile" type="RigidBody3D"]
+freeze = true
+script = ExtResource("1_oof16")
+
+[node name="Collider" type="CollisionPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+polygon = PackedVector2Array(-1, 0, -0.5, 0.866, 0.5, 0.866, 1, 0, 0.5, -0.866, -0.5, -0.866)
+
+[node name="Graphic" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0, 0)
+mesh = SubResource("TubeTrailMesh_6nobc")
