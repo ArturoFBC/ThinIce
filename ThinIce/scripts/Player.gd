@@ -29,3 +29,12 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_normal().is_equal_approx(Vector3.UP): # only if the character is totally on top of the platform
+			var collider = collision.get_collider()
+			if collider.has_method('start_fall_timer'):
+				collider.start_fall_timer()
+		
+	pass
