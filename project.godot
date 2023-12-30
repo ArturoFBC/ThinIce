@@ -14,3 +14,8 @@ config/name="ThinIce"
 run/main_scene="res://ThinIce/scenes/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+ScoreManager="*res://ThinIce/scripts/Managers/score_manager.gd"
+GlobalSignals="*res://ThinIce/scripts/Managers/global_signals.gd"
