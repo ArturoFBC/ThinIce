@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cynyv8u2816cn"]
+
+[ext_resource type="FontFile" uid="uid://bi4hlvjbwkv80" path="res://ThinIce/fonts/Blaka-Regular.ttf" id="1_g8ewe"]
+
+[resource]
+font = ExtResource("1_g8ewe")
+font_size = 160
+font_color = Color(0, 0.505882, 0.505882, 1)
+outline_size = 30
+shadow_size = 60
+shadow_color = Color(0, 0, 0, 1)

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ThinIce"
-run/main_scene="res://ThinIce/scenes/game.tscn"
+run/main_scene="res://ThinIce/scenes/menu_scene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 

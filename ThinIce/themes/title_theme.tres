@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://l447v2jfb2pq"]
+
+[ext_resource type="FontFile" uid="uid://bi4hlvjbwkv80" path="res://ThinIce/fonts/Blaka-Regular.ttf" id="1_m35w6"]
+
+[resource]
+Label/constants/outline_size = 50
+Label/font_sizes/font_size = 160
+Label/fonts/font = ExtResource("1_m35w6")

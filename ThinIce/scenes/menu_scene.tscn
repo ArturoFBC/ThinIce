@@ -1,0 +1,176 @@
+[gd_scene load_steps=15 format=3 uid="uid://wgqhk5o62dtd"]
+
+[ext_resource type="Script" path="res://ThinIce/scripts/UI/ice_panel_background.gd" id="1_bqvvf"]
+[ext_resource type="Theme" uid="uid://50e1wfgox3lc" path="res://ThinIce/themes/menu_theme.tres" id="1_ewshw"]
+[ext_resource type="Texture2D" uid="uid://c5jscgyo4anjk" path="res://ThinIce/graphics/thermometer-cold.png" id="2_ll8g0"]
+[ext_resource type="LabelSettings" uid="uid://cynyv8u2816cn" path="res://ThinIce/themes/title_style.tres" id="3_0fyt2"]
+[ext_resource type="Shader" path="res://ThinIce/scenes/menu_scene.gdshader" id="3_ibbvw"]
+[ext_resource type="FontFile" uid="uid://bi4hlvjbwkv80" path="res://ThinIce/fonts/Blaka-Regular.ttf" id="4_1gw21"]
+[ext_resource type="Script" path="res://ThinIce/scripts/UI/CreditsButton.gd" id="7_ljuvb"]
+
+[sub_resource type="Gradient" id="Gradient_8lk00"]
+offsets = PackedFloat32Array(0, 0.295374, 1)
+colors = PackedColorArray(0.787759, 0.787759, 0.787759, 1, 0, 0.588643, 0.58663, 1, 0.207843, 0.247059, 0.247059, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gjdhn"]
+noise_type = 2
+frequency = 0.003
+fractal_octaves = 4
+cellular_return_type = 0
+domain_warp_type = 1
+domain_warp_frequency = 0.02
+domain_warp_fractal_type = 0
+domain_warp_fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tjvtr"]
+width = 1024
+bump_strength = 8.8
+color_ramp = SubResource("Gradient_8lk00")
+noise = SubResource("FastNoiseLite_gjdhn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4yh23"]
+texture = SubResource("NoiseTexture2D_tjvtr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7n8n"]
+resource_local_to_scene = true
+shader = ExtResource("3_ibbvw")
+shader_parameter/tint_color = Vector4(0, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rmsdw"]
+resource_local_to_scene = true
+shader = ExtResource("3_ibbvw")
+shader_parameter/tint_color = Vector4(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_56ig8"]
+font = ExtResource("4_1gw21")
+font_size = 160
+font_color = Color(0, 0.505882, 0.505882, 1)
+outline_size = 30
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="MenuScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 324)
+theme = ExtResource("1_ewshw")
+theme_override_styles/panel = SubResource("StyleBoxTexture_4yh23")
+script = ExtResource("1_bqvvf")
+scroll_speed = Vector3(10, 10, 0)
+jitter_speed = 0.01
+
+[node name="MainMenuMarginContainer" type="MarginContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/MainMenuMarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_d7n8n")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_ll8g0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/Icon"]
+material = SubResource("ShaderMaterial_rmsdw")
+layout_mode = 2
+offset_left = -14.5
+offset_top = -11.0
+offset_right = 497.5
+offset_bottom = 501.0
+rotation = 0.0174533
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_ll8g0")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/Icon/TextureRect2"]
+layout_mode = 2
+offset_left = 4.46441
+offset_top = -2.07823
+offset_right = 516.465
+offset_bottom = 509.922
+rotation = -0.0174533
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_ll8g0")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 20
+
+[node name="TitleOutline" type="Label" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "Thin Ice"
+label_settings = ExtResource("3_0fyt2")
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/VBoxContainer/TitleOutline"]
+layout_mode = 0
+text = "Thin Ice"
+label_settings = SubResource("LabelSettings_56ig8")
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ewshw")
+text = "Play"
+
+[node name="CreditsButton" type="Button" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/VBoxContainer" node_paths=PackedStringArray("deactivateNode", "activateNode")]
+layout_mode = 2
+theme = ExtResource("1_ewshw")
+text = "Credits"
+script = ExtResource("7_ljuvb")
+deactivateNode = NodePath("../../..")
+activateNode = NodePath("../../../../CreditsContainer")
+
+[node name="ScoresButton" type="Button" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ewshw")
+text = "Scores"
+
+[node name="CreditsContainer" type="MarginContainer" parent="CanvasLayer/Panel"]
+visible = false
+layout_mode = 2
+offset_left = 120.0
+offset_top = 80.0
+offset_right = 1032.0
+offset_bottom = 568.0
+
+[node name="Button" type="Button" parent="CanvasLayer/Panel/CreditsContainer" node_paths=PackedStringArray("deactivateNode", "activateNode")]
+layout_mode = 2
+text = "Close"
+script = ExtResource("7_ljuvb")
+deactivateNode = NodePath("..")
+activateNode = NodePath("../../MainMenuMarginContainer")

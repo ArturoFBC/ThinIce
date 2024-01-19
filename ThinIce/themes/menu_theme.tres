@@ -1,0 +1,66 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://50e1wfgox3lc"]
+
+[ext_resource type="FontFile" uid="uid://npvnliwnwjs7" path="res://ThinIce/fonts/Underdog-Regular.ttf" id="1_8ugi6"]
+[ext_resource type="StyleBox" uid="uid://dqaweqyfgkn0a" path="res://ThinIce/themes/style_box_flat_title_button/disabled.tres" id="1_jonw2"]
+[ext_resource type="StyleBox" uid="uid://chrscyowrghy1" path="res://ThinIce/themes/style_box_flat_title_button/focus.tres" id="2_u7lny"]
+[ext_resource type="StyleBox" uid="uid://chy302s8sw4mv" path="res://ThinIce/themes/style_box_flat_title_button/hover.tres" id="3_acvyi"]
+[ext_resource type="StyleBox" uid="uid://78c3070skatb" path="res://ThinIce/themes/style_box_flat_title_button/normal.tres" id="4_o4uvv"]
+[ext_resource type="StyleBox" uid="uid://bym8dur04jr6c" path="res://ThinIce/themes/style_box_flat_title_button/hover_pressed.tres" id="5_pyk7d"]
+[ext_resource type="StyleBox" uid="uid://bamksn5a0vfrw" path="res://ThinIce/themes/style_box_flat_title_button/pressed.tres" id="6_p5ob4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ee7nf"]
+content_margin_left = 8.0
+content_margin_top = 5.0
+content_margin_right = 8.0
+content_margin_bottom = 0.0
+bg_color = Color(0.701961, 0.701961, 0.701961, 1)
+skew = Vector2(0.5, 0)
+border_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 5
+expand_margin_bottom = 3.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qgtt3"]
+
+[resource]
+default_font = ExtResource("1_8ugi6")
+default_font_size = 20
+Button/colors/font_color = Color(0, 0.505882, 0.505882, 1)
+Button/colors/font_disabled_color = Color(0.227451, 0.372549, 0.372549, 1)
+Button/colors/font_focus_color = Color(0, 0.505882, 0.505882, 1)
+Button/colors/font_hover_color = Color(0, 0.505882, 0.505882, 1)
+Button/colors/font_pressed_color = Color(0, 0.505882, 0.505882, 1)
+Button/font_sizes/font_size = 30
+Button/styles/disabled = ExtResource("1_jonw2")
+Button/styles/focus = ExtResource("2_u7lny")
+Button/styles/hover = ExtResource("3_acvyi")
+Button/styles/normal = ExtResource("4_o4uvv")
+Button/styles/pressed = SubResource("StyleBoxFlat_ee7nf")
+CheckBox/font_sizes/font_size = 25
+CheckBox/styles/disabled = ExtResource("1_jonw2")
+CheckBox/styles/focus = ExtResource("2_u7lny")
+CheckBox/styles/hover = ExtResource("3_acvyi")
+CheckBox/styles/hover_pressed = ExtResource("5_pyk7d")
+CheckBox/styles/normal = ExtResource("4_o4uvv")
+CheckBox/styles/pressed = ExtResource("6_p5ob4")
+CheckButton/font_sizes/font_size = 25
+CheckButton/styles/disabled = ExtResource("1_jonw2")
+CheckButton/styles/focus = ExtResource("2_u7lny")
+CheckButton/styles/hover = ExtResource("3_acvyi")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_ee7nf")
+CheckButton/styles/normal = ExtResource("4_o4uvv")
+CheckButton/styles/pressed = SubResource("StyleBoxFlat_ee7nf")
+FlatButton/styles/normal = ExtResource("4_o4uvv")
+FlatButton/styles/pressed = SubResource("StyleBoxFlat_ee7nf")
+Label/colors/font_color = Color(0, 0.835294, 0.835294, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 2
+Label/font_sizes/font_size = 30
+Label/styles/normal = SubResource("StyleBoxEmpty_qgtt3")
