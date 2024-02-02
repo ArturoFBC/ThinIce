@@ -1,14 +1,48 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnmmo1vd51sqb"]
+[gd_scene load_steps=16 format=3 uid="uid://bnmmo1vd51sqb"]
 
 [ext_resource type="Script" path="res://ThinIce/scripts/Player.gd" id="1_5vgja"]
 [ext_resource type="Script" path="res://ThinIce/scripts/Floor.gd" id="1_ku487"]
 [ext_resource type="PackedScene" uid="uid://880biyv5t7e7" path="res://ThinIce/prefabs/hex_tile.tscn" id="2_mdasm"]
+[ext_resource type="PackedScene" uid="uid://diho7rfxd6t4k" path="res://ThinIce/models/bear.glb" id="4_3o60o"]
 [ext_resource type="Script" path="res://ThinIce/scripts/UI/display_score.gd" id="4_rlv1a"]
+[ext_resource type="Animation" uid="uid://43v1iqiv1tkl" path="res://ThinIce/models/bear_landing.res" id="5_mw30k"]
+[ext_resource type="Animation" uid="uid://dvhm3kjo88ddq" path="res://ThinIce/models/bear_jump.res" id="6_c623p"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nxvil"]
 height = 1.0
 
-[sub_resource type="PrismMesh" id="PrismMesh_gdg80"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ogx2f"]
+_data = {
+"bear_jump": ExtResource("6_c623p"),
+"bear_landing": ExtResource("5_mw30k")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tesmc"]
+animation = &"bear_jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rx30a"]
+animation = &"bear_landing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lw6h6"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uudnm"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"landing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_55fwf"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_kl2ks"]
+states/Start/position = Vector2(199, 80)
+states/bear_jump/node = SubResource("AnimationNodeAnimation_tesmc")
+states/bear_jump/position = Vector2(449, 152)
+states/bear_landing/node = SubResource("AnimationNodeAnimation_rx30a")
+states/bear_landing/position = Vector2(647, 152)
+transitions = ["Start", "bear_jump", SubResource("AnimationNodeStateMachineTransition_lw6h6"), "bear_jump", "bear_landing", SubResource("AnimationNodeStateMachineTransition_uudnm"), "bear_landing", "bear_jump", SubResource("AnimationNodeStateMachineTransition_55fwf")]
+graph_offset = Vector2(-306, -21)
 
 [node name="Game" type="Node3D"]
 
@@ -22,15 +56,31 @@ spacing = 1.2
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 5)
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("animation_tree")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.88908, 0)
 script = ExtResource("1_5vgja")
+land_time = 0.2
+animation_tree = NodePath("bear2/AnimationTree")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CylinderShape3D_nxvil")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-mesh = SubResource("PrismMesh_gdg80")
+[node name="bear2" parent="CharacterBody3D" instance=ExtResource("4_3o60o")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="CharacterBody3D/bear2"]
+libraries = {
+"": SubResource("AnimationLibrary_ogx2f")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="CharacterBody3D/bear2"]
+root_motion_track = NodePath("bear_bones/Skeleton3D:hips")
+libraries = {
+"": SubResource("AnimationLibrary_ogx2f")
+}
+tree_root = SubResource("AnimationNodeStateMachine_kl2ks")
+anim_player = NodePath("../AnimationPlayer2")
+parameters/conditions/landing = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.0388064, 0.909954, -0.412888, 0, 0.4132, 0.91064, 0.999247, 0.0353387, -0.0160348, -1.7382, 5.66893, 0)

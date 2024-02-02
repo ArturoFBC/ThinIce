@@ -98,30 +98,36 @@ stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/Icon"]
 material = SubResource("ShaderMaterial_rmsdw")
-layout_mode = 2
-offset_left = -14.5
-offset_top = -11.0
-offset_right = 497.5
-offset_bottom = 501.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 rotation = 0.0174533
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("2_ll8g0")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer/Icon/TextureRect2"]
-layout_mode = 2
-offset_left = 4.46441
-offset_top = -2.07823
-offset_right = 516.465
-offset_bottom = 509.922
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.12095
+offset_top = -6.85931
+offset_right = -8.12094
+offset_bottom = -6.85931
+grow_horizontal = 2
+grow_vertical = 2
 rotation = -0.0174533
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("2_ll8g0")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/MainMenuMarginContainer/HBoxContainer"]
 layout_mode = 2

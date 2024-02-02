@@ -7,6 +7,14 @@ const JUMP_VELOCITY = 4.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+@export var land_time : float
+var land_counter : float
+
+@export var animation_tree : AnimationTree
+
+func _ready() -> void:
+	land_counter = land_time
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -14,8 +22,16 @@ func _physics_process(delta):
 
 	# Handle jump.
 	if is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		GlobalSignals.jump.emit()
+		if land_counter == land_time:
+			animation_tree["parameters/conditions/landing"] = true
+		
+		if land_counter <= 0 :
+			velocity.y = JUMP_VELOCITY
+			GlobalSignals.jump.emit()
+			animation_tree["parameters/conditions/landing"] = false
+			land_counter = land_time
+		else:
+			land_counter -= delta
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
