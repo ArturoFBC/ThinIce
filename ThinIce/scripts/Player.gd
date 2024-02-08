@@ -12,6 +12,8 @@ var land_counter : float
 
 @export var animation_tree : AnimationTree
 
+@export var graphic : Node3D
+
 func _ready() -> void:
 	land_counter = land_time
 
@@ -30,21 +32,24 @@ func _physics_process(delta):
 			GlobalSignals.jump.emit()
 			animation_tree["parameters/conditions/landing"] = false
 			land_counter = land_time
+			move_and_slide()
 		else:
 			land_counter -= delta
 
+	else:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+			graphic.look_at(position - direction, Vector3.UP)
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
 
-	move_and_slide()
+		move_and_slide()
 	
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)

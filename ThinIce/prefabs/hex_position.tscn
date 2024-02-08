@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh5qxkb0rduig"]
+
+[ext_resource type="Script" path="res://ThinIce/scripts/hex_position.gd" id="1_6x3ml"]
+[ext_resource type="PackedScene" uid="uid://880biyv5t7e7" path="res://ThinIce/prefabs/hex_tile.tscn" id="1_jxej7"]
+
+[node name="HexPosition" type="Node3D" node_paths=PackedStringArray("current_tile")]
+script = ExtResource("1_6x3ml")
+current_tile = NodePath("HexTile")
+destroy_time = 1.0
+respawn_minimum = 10.0
+respawn_variation = 8
+
+[node name="HexTile" parent="." instance=ExtResource("1_jxej7")]
+
+[node name="Graphic" parent="HexTile" index="1"]
+gi_mode = 2
+
+[editable path="HexTile"]

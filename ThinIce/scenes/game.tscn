@@ -1,12 +1,40 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnmmo1vd51sqb"]
+[gd_scene load_steps=23 format=3 uid="uid://bnmmo1vd51sqb"]
 
 [ext_resource type="Script" path="res://ThinIce/scripts/Player.gd" id="1_5vgja"]
 [ext_resource type="Script" path="res://ThinIce/scripts/Floor.gd" id="1_ku487"]
-[ext_resource type="PackedScene" uid="uid://880biyv5t7e7" path="res://ThinIce/prefabs/hex_tile.tscn" id="2_mdasm"]
+[ext_resource type="PackedScene" uid="uid://dh5qxkb0rduig" path="res://ThinIce/prefabs/hex_position.tscn" id="2_v5nyr"]
 [ext_resource type="PackedScene" uid="uid://diho7rfxd6t4k" path="res://ThinIce/models/bear.glb" id="4_3o60o"]
 [ext_resource type="Script" path="res://ThinIce/scripts/UI/display_score.gd" id="4_rlv1a"]
 [ext_resource type="Animation" uid="uid://43v1iqiv1tkl" path="res://ThinIce/models/bear_landing.res" id="5_mw30k"]
 [ext_resource type="Animation" uid="uid://dvhm3kjo88ddq" path="res://ThinIce/models/bear_jump.res" id="6_c623p"]
+[ext_resource type="AudioStream" uid="uid://8gmyy6henqx3" path="res://ThinIce/music/Ethernight Club.mp3" id="8_3rkrm"]
+
+[sub_resource type="Gradient" id="Gradient_w61f6"]
+colors = PackedColorArray(0.368683, 0.442751, 0.648031, 1, 0.631373, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kv3hk"]
+fractal_type = 0
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_feqne"]
+seamless = true
+color_ramp = SubResource("Gradient_w61f6")
+noise = SubResource("FastNoiseLite_kv3hk")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yc121"]
+panorama = SubResource("NoiseTexture2D_feqne")
+
+[sub_resource type="Sky" id="Sky_t8jh4"]
+sky_material = SubResource("PanoramaSkyMaterial_yc121")
+
+[sub_resource type="Environment" id="Environment_gbu5r"]
+background_mode = 2
+sky = SubResource("Sky_t8jh4")
+sky_custom_fov = 63.0
+ambient_light_sky_contribution = 0.5
+reflected_light_source = 1
+fog_light_color = Color(0.298039, 0.6, 0.678431, 1)
+volumetric_fog_density = 0.0155
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nxvil"]
 height = 1.0
@@ -46,27 +74,40 @@ graph_offset = Vector2(-306, -21)
 
 [node name="Game" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gbu5r")
+
+[node name="HexPosition" parent="WorldEnvironment" instance=ExtResource("2_v5nyr")]
+
+[node name="HexPosition" parent="WorldEnvironment/HexPosition" node_paths=PackedStringArray("current_tile") instance=ExtResource("2_v5nyr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79965, 1.57267, 0)
+current_tile = NodePath("../HexTile")
+
 [node name="Floor" type="Node" parent="."]
 script = ExtResource("1_ku487")
-hex_tile = ExtResource("2_mdasm")
+hex_tile = ExtResource("2_v5nyr")
 columns = 20
 rows = 5
 spacing = 1.2
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 5)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 11.6813, 14.7274)
+fov = 50.0
+size = 25.21
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("animation_tree")]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("animation_tree", "graphic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.88908, 0)
 script = ExtResource("1_5vgja")
 land_time = 0.2
 animation_tree = NodePath("bear2/AnimationTree")
+graphic = NodePath("bear2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CylinderShape3D_nxvil")
 
 [node name="bear2" parent="CharacterBody3D" instance=ExtResource("4_3o60o")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, -0.524028, 0)
+rotation_edit_mode = 1
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="CharacterBody3D/bear2"]
 libraries = {
@@ -84,6 +125,7 @@ parameters/conditions/landing = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.0388064, 0.909954, -0.412888, 0, 0.4132, 0.91064, 0.999247, 0.0353387, -0.0160348, -1.7382, 5.66893, 0)
+shadow_enabled = true
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -109,3 +151,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 script = ExtResource("4_rlv1a")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_3rkrm")
+autoplay = true
