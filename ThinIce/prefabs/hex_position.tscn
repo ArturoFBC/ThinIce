@@ -7,8 +7,8 @@
 script = ExtResource("1_6x3ml")
 current_tile = NodePath("HexTile")
 destroy_time = 1.0
-respawn_minimum = 10.0
-respawn_variation = 8
+respawn_minimum = 35.0
+respawn_variation = 15
 
 [node name="HexTile" parent="." instance=ExtResource("1_jxej7")]
 

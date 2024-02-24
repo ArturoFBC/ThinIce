@@ -1,22 +1,14 @@
-[gd_scene load_steps=33 format=3 uid="uid://bnmmo1vd51sqb"]
+[gd_scene load_steps=25 format=3 uid="uid://bnmmo1vd51sqb"]
 
-[ext_resource type="Script" path="res://ThinIce/scripts/player.gd" id="1_5vgja"]
-[ext_resource type="Script" path="res://ThinIce/scripts/floor.gd" id="1_ku487"]
-[ext_resource type="Script" path="res://ThinIce/scripts/Managers/game_manager.gd" id="1_psv0b"]
+[ext_resource type="Script" path="res://ThinIce/scripts/Player.gd" id="1_5vgja"]
+[ext_resource type="Script" path="res://ThinIce/scripts/Floor.gd" id="1_ku487"]
 [ext_resource type="PackedScene" uid="uid://dh5qxkb0rduig" path="res://ThinIce/prefabs/hex_position.tscn" id="2_v5nyr"]
 [ext_resource type="PackedScene" uid="uid://diho7rfxd6t4k" path="res://ThinIce/models/bear.glb" id="4_3o60o"]
 [ext_resource type="Script" path="res://ThinIce/scripts/UI/display_score.gd" id="4_rlv1a"]
 [ext_resource type="Animation" uid="uid://43v1iqiv1tkl" path="res://ThinIce/models/bear_landing.res" id="5_mw30k"]
 [ext_resource type="Animation" uid="uid://dvhm3kjo88ddq" path="res://ThinIce/models/bear_jump.res" id="6_c623p"]
-[ext_resource type="Script" path="res://ThinIce/scripts/UI/load_scene_button.gd" id="6_y3tov"]
-[ext_resource type="Theme" uid="uid://50e1wfgox3lc" path="res://ThinIce/themes/menu_theme.tres" id="8_3jjin"]
-[ext_resource type="AudioStream" uid="uid://8gmyy6henqx3" path="res://ThinIce/audio/Ethernight Club.mp3" id="8_3rkrm"]
-[ext_resource type="Script" path="res://ThinIce/scripts/fall_detector.gd" id="9_j72py"]
-[ext_resource type="Script" path="res://ThinIce/scripts/UI/end_game_panel.gd" id="10_ichc6"]
-[ext_resource type="Script" path="res://ThinIce/scripts/UI/starting_time_display.gd" id="10_rn0gl"]
-[ext_resource type="Theme" uid="uid://l447v2jfb2pq" path="res://ThinIce/themes/title_theme.tres" id="11_24f88"]
-[ext_resource type="Script" path="res://ThinIce/scenes/SoundOnJump.gd" id="11_j6ydy"]
-[ext_resource type="AudioStream" uid="uid://7t0cm6sto0ob" path="res://ThinIce/audio/THUD_Bright_03_mono.wav" id="11_xncgk"]
+[ext_resource type="AudioStream" uid="uid://8gmyy6henqx3" path="res://ThinIce/music/Ethernight Club.mp3" id="8_3rkrm"]
+[ext_resource type="Script" path="res://ThinIce/scenes/fall_detector.gd" id="9_j72py"]
 
 [sub_resource type="Gradient" id="Gradient_w61f6"]
 colors = PackedColorArray(0.368683, 0.442751, 0.648031, 1, 0.631373, 1, 1, 1)
@@ -84,132 +76,9 @@ graph_offset = Vector2(-306, -21)
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qw224"]
 
 [node name="Game" type="Node3D"]
-script = ExtResource("1_psv0b")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gbu5r")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 80.0
-offset_bottom = 70.0
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-tooltip_text = "This is the score"
-mouse_filter = 1
-theme = ExtResource("8_3jjin")
-text = "0"
-horizontal_alignment = 2
-vertical_alignment = 1
-script = ExtResource("4_rlv1a")
-
-[node name="EndGamePanel" type="Panel" parent="CanvasLayer" node_paths=PackedStringArray("game_manager", "label")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("8_3jjin")
-script = ExtResource("10_ichc6")
-game_manager = NodePath("../..")
-label = NodePath("MarginContainer/VBoxContainer/FinalScoreLabel")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/EndGamePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_top = -139.0
-offset_right = 211.0
-offset_bottom = 139.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/EndGamePanel/MarginContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="GameOverLable" type="Label" parent="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("11_24f88")
-theme_override_constants/outline_size = 30
-theme_override_font_sizes/font_size = 100
-text = "GAME OVER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Spacer" type="Label" parent="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("8_3jjin")
-text = "
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="FinalScoreLabel" type="Label" parent="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-tooltip_text = "This is the score"
-mouse_filter = 1
-theme = ExtResource("8_3jjin")
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Spacer2" type="Label" parent="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("8_3jjin")
-text = "
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Return to menu"
-script = ExtResource("6_y3tov")
-new_scene = "res://ThinIce/scenes/menu_scene.tscn"
-
-[node name="StartingPanel" type="Panel" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("8_3jjin")
-
-[node name="StartingTime" type="Label" parent="CanvasLayer/StartingPanel" node_paths=PackedStringArray("game_manager", "my_panel")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -31.0
-offset_right = 30.0
-offset_bottom = 29.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2, 2)
-pivot_offset = Vector2(30, 30)
-tooltip_text = "This is the score"
-mouse_filter = 1
-theme = ExtResource("8_3jjin")
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("10_rn0gl")
-game_manager = NodePath("../../..")
-my_panel = NodePath("..")
 
 [node name="Floor" type="Node" parent="."]
 script = ExtResource("1_ku487")
@@ -229,10 +98,6 @@ script = ExtResource("1_5vgja")
 land_time = 0.2
 animation_tree = NodePath("bear2/AnimationTree")
 graphic = NodePath("bear2")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
-stream = ExtResource("11_xncgk")
-script = ExtResource("11_j6ydy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CylinderShape3D_nxvil")
@@ -259,19 +124,41 @@ parameters/conditions/landing = false
 transform = Transform3D(-0.0388064, 0.909954, -0.412888, 0, 0.4132, 0.91064, 0.999247, 0.0353387, -0.0160348, -1.7382, 5.66893, 0)
 shadow_enabled = true
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 36.0
+offset_right = -1094.0
+offset_bottom = -593.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 100.0
+offset_bottom = 30.0
+tooltip_text = "This is the score"
+mouse_filter = 1
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("4_rlv1a")
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_3rkrm")
-volume_db = -10.0
 autoplay = true
 
-[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("game_manager")]
+[node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.33361, 0)
 script = ExtResource("9_j72py")
-game_manager = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("WorldBoundaryShape3D_qw224")
 
-[connection signal="pressed" from="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer/Button" to="CanvasLayer/EndGamePanel/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
